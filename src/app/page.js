@@ -4,7 +4,6 @@ export default function Home() {
   return (
     <div
       style={{
-        backgroundColor: "red",
         height: "90vh",
       }}
     >
