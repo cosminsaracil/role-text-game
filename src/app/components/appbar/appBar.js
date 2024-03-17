@@ -33,13 +33,39 @@ function ResponsiveAppBar() {
   const [health, setHealth] = useState(100);
   const [gold, setGold] = useState(50);
   const [xp, setXp] = useState(0);
-  const [weapon, setWeapon] = useState(["stick"]);
-  // let health = 100;
-  // let gold = 50;
-  // let xp = 0;
+
   const [text, setText] = useState(
     "Welcome to Dragon Repeller. You must defeat the dragon that is preventing people from leaving the town. You are in the town square. Where do you want to go? Use the buttons above. "
   );
+
+  let currentWeapon = 0;
+  const weapons = [
+    { name: "stick", power: 5 },
+    { name: "dagger", power: 30 },
+    { name: "claw hammer", power: 50 },
+    { name: "sword", power: 100 },
+  ];
+
+  const monsters = [
+    {
+      name: "slime",
+      level: 2,
+      health: 15,
+    },
+    {
+      name: "fanged beast",
+      level: 8,
+      health: 60,
+    },
+    {
+      name: "dragon",
+      level: 20,
+      health: 300,
+    },
+  ];
+
+  const [weapon, setWeapon] = useState([weapons[currentWeapon]]);
+
   return (
     <AppBar
       position="static"
@@ -130,7 +156,6 @@ function ResponsiveAppBar() {
                       onClick={() => {
                         setGold(gold - 10);
                         setHealth(health + 10);
-                        setXp(xp + 10);
                         setText("You bought 10 health with 10 gold.");
                         if (gold <= 10) {
                           setText("You do not have enough gold.");
@@ -143,12 +168,19 @@ function ResponsiveAppBar() {
                       sx={{ my: 2, color: "white", ml: "10px" }}
                       variant="contained"
                       size="small"
+                      disabled={gold < 30 || weapon === "sword"}
                       onClick={() => {
+                        currentWeapon++;
                         setGold(gold - 30);
-                        setWeapon(["sword"]);
-                        setText("You bought a sword for 30 gold.");
+                        setWeapon([weapons[currentWeapon].name]);
+                        setText(
+                          `You bought a ${weapons[currentWeapon].name} for 30 gold.`
+                        );
                         if (gold <= 30) {
                           setText("You do not have enough gold.");
+                        }
+                        if (weapon === "sword") {
+                          setText("You already have the most powerful weapon.");
                         }
                       }}
                     >
