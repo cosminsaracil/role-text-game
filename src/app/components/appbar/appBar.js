@@ -128,7 +128,10 @@ function ResponsiveAppBar() {
                       sx={{ my: 2, color: "white", ml: "10px" }}
                       variant="contained"
                       size="small"
-                      onClick={() => setLocation("cave")}
+                      onClick={() => {
+                        setLocation("cave");
+                        setText("You enter the cave. You see some monsters.");
+                      }}
                     >
                       {place.buttonText[1]}
                     </Button>
@@ -202,6 +205,64 @@ function ResponsiveAppBar() {
                   </div>
                 )
             )}
+          {location === "cave" &&
+            places.map(
+              (place) =>
+                place.name === location && (
+                  <div key={place.name}>
+                    <Button
+                      sx={{ my: 2, color: "white", ml: "10px" }}
+                      variant="contained"
+                      size="small"
+                      onClick={() => {
+                        setGold(gold - 10);
+                        setHealth(health + 10);
+                        setText("You bought 10 health with 10 gold.");
+                        if (gold <= 10) {
+                          setText("You do not have enough gold.");
+                        }
+                      }}
+                    >
+                      {place.buttonText[0]}
+                    </Button>
+                    <Button
+                      sx={{ my: 2, color: "white", ml: "10px" }}
+                      variant="contained"
+                      size="small"
+                      disabled={gold < 30 || weapon === "sword"}
+                      onClick={() => {
+                        currentWeapon++;
+                        setGold(gold - 30);
+                        setWeapon([weapons[currentWeapon].name]);
+                        setText(
+                          `You bought a ${weapons[currentWeapon].name} for 30 gold.`
+                        );
+                        if (gold <= 30) {
+                          setText("You do not have enough gold.");
+                        }
+                        if (weapon === "sword") {
+                          setText("You already have the most powerful weapon.");
+                        }
+                      }}
+                    >
+                      {place.buttonText[1]}
+                    </Button>
+                    <Button
+                      sx={{ my: 2, color: "white", ml: "10px" }}
+                      variant="contained"
+                      size="small"
+                      onClick={() => {
+                        setLocation("town_square");
+                        setText(
+                          'You are in the town square. You see a sign that says "Store".'
+                        );
+                      }}
+                    >
+                      {place.buttonText[2]}
+                    </Button>
+                  </div>
+                )
+            )}
         </Box>
         <Box
           sx={{
@@ -222,6 +283,11 @@ function ResponsiveAppBar() {
             </>
           )}
           {location === "store" && (
+            <>
+              <Typography>{text}</Typography>
+            </>
+          )}
+          {location === "cave" && (
             <>
               <Typography>{text}</Typography>
             </>
