@@ -64,6 +64,12 @@ function ResponsiveAppBar() {
     },
   ];
 
+  const fighting = [
+    {
+      buttonText: ["Attack", "Dodge", "Run"],
+    },
+  ];
+
   const [weapon, setWeapon] = useState([weapons[currentWeapon]]);
 
   return (
@@ -152,18 +158,11 @@ function ResponsiveAppBar() {
                 place.name === location && (
                   <div key={place.name}>
                     <Button
-                      sx={{ my: 2, color: "white", ml: "10px" }}
+                      sx={{ my: 2, color: "white", ml: "5px" }}
                       variant="contained"
                       size="small"
                       disabled={gold < 10}
-                      onClick={() => {
-                        setGold(gold - 10);
-                        setHealth(health + 10);
-                        setText("You bought 10 health with 10 gold.");
-                        if (gold <= 10) {
-                          setText("You do not have enough gold.");
-                        }
-                      }}
+                      onClick={() => ""}
                     >
                       {place.buttonText[0]}
                     </Button>
@@ -172,20 +171,7 @@ function ResponsiveAppBar() {
                       variant="contained"
                       size="small"
                       disabled={gold < 30 || weapon === "sword"}
-                      onClick={() => {
-                        currentWeapon++;
-                        setGold(gold - 30);
-                        setWeapon([weapons[currentWeapon].name]);
-                        setText(
-                          `You bought a ${weapons[currentWeapon].name} for 30 gold.`
-                        );
-                        if (gold <= 30) {
-                          setText("You do not have enough gold.");
-                        }
-                        if (weapon === "sword") {
-                          setText("You already have the most powerful weapon.");
-                        }
-                      }}
+                      onClick={() => ""}
                     >
                       {place.buttonText[1]}
                     </Button>
@@ -211,7 +197,7 @@ function ResponsiveAppBar() {
                 place.name === location && (
                   <div key={place.name}>
                     <Button
-                      sx={{ my: 2, color: "white", ml: "10px" }}
+                      sx={{ my: 2, color: "white", ml: "5px" }}
                       variant="contained"
                       size="small"
                       onClick={() => {
