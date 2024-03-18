@@ -69,6 +69,11 @@ function ResponsiveAppBar() {
   const [monster, setMonster] = useState();
   console.log(monsters[0]);
 
+  const damageFromTheMonster = (level) => {
+    const hit = level * 5 - Math.floor(Math.random() * xp);
+    return hit > 0 ? hit : 0;
+  };
+
   return (
     <AppBar
       position="static"
@@ -257,7 +262,13 @@ function ResponsiveAppBar() {
                       sx={{ my: 2, color: "white", ml: "5px" }}
                       variant="contained"
                       size="small"
+                      onClick={() => {
+                        setText(
+                          `The ${monster.name} attacks. You attack it with your ${weapon}.`
+                        );
+                      }}
                     >
+                      {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
                       {place.buttonText[0]}
                     </Button>
                     <Button
