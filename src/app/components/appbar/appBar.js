@@ -26,6 +26,7 @@ const places = [
     buttonText: ["Fight slime", "Fight fanged beast", "Go to town square"],
   },
   { name: "dragon", buttonText: ["Attack", "Dodge", "Run"] },
+  { name: "fighting", buttonText: ["Attack", "Dodge", "Run"] },
 ];
 
 function ResponsiveAppBar() {
@@ -64,13 +65,9 @@ function ResponsiveAppBar() {
     },
   ];
 
-  const fighting = [
-    {
-      buttonText: ["Attack", "Dodge", "Run"],
-    },
-  ];
-
   const [weapon, setWeapon] = useState([weapons[currentWeapon]]);
+  const [monster, setMonster] = useState();
+  console.log(monsters[0]);
 
   return (
     <AppBar
@@ -220,6 +217,11 @@ function ResponsiveAppBar() {
                       sx={{ my: 2, color: "white", ml: "5px" }}
                       variant="contained"
                       size="small"
+                      onClick={() => {
+                        setLocation("fighting");
+                        setText("You are fighting a monster.");
+                        setMonster(monsters[0]);
+                      }}
                     >
                       {place.buttonText[0]}
                     </Button>
@@ -246,7 +248,50 @@ function ResponsiveAppBar() {
                   </div>
                 )
             )}
+          {location === "fighting" &&
+            places.map(
+              (place) =>
+                place.name === location && (
+                  <div key={place.name}>
+                    <Button
+                      sx={{ my: 2, color: "white", ml: "5px" }}
+                      variant="contained"
+                      size="small"
+                    >
+                      {place.buttonText[0]}
+                    </Button>
+                    <Button
+                      sx={{ my: 2, color: "white", ml: "10px" }}
+                      variant="contained"
+                      size="small"
+                    >
+                      {place.buttonText[1]}
+                    </Button>
+                    <Button
+                      sx={{ my: 2, color: "white", ml: "10px" }}
+                      variant="contained"
+                      size="small"
+                    >
+                      {place.buttonText[2]}
+                    </Button>
+                  </div>
+                )
+            )}
         </Box>
+        {location === "fighting" && (
+          <Box
+            sx={{
+              height: "40px",
+              backgroundColor: "red",
+              borderLeft: "2px solid black",
+              borderRight: "2px solid black",
+              borderTop: "2px solid black",
+            }}
+          >
+            <Typography></Typography>
+          </Box>
+        )}
+
         <Box
           sx={{
             flexGrow: 1,
@@ -271,6 +316,11 @@ function ResponsiveAppBar() {
             </>
           )}
           {location === "cave" && (
+            <>
+              <Typography>{text}</Typography>
+            </>
+          )}
+          {location === "fighting" && (
             <>
               <Typography>{text}</Typography>
             </>
