@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
 import { useState } from "react";
 
 const places = [
@@ -27,6 +26,12 @@ const places = [
   },
   { name: "dragon", buttonText: ["Attack", "Dodge", "Run"] },
   { name: "fighting", buttonText: ["Attack", "Dodge", "Run"] },
+  { name: "lose", buttonText: ["Replay?", "Replay?", "Replay?"] },
+  { name: "win", buttonText: ["Replay?", "Replay?", "Replay?"] },
+  {
+    name: "defeat_monster",
+    buttonText: ["Go to town square", "Go to town square", "Go to town square"],
+  },
 ];
 
 function ResponsiveAppBar() {
@@ -67,8 +72,7 @@ function ResponsiveAppBar() {
 
   const [weapon, setWeapon] = useState([weapons[currentWeapon]]);
   const [monster, setMonster] = useState();
-  console.log(monsters[0]);
-
+  console.log(weapon);
   const damageFromTheMonster = (level) => {
     const hit = level * 5 - Math.floor(Math.random() * xp);
     return hit > 0 ? hit : 0;
@@ -87,7 +91,7 @@ function ResponsiveAppBar() {
       <Container
         maxWidth="xl"
         sx={{
-          width: "50%",
+          width: "55%",
         }}
       >
         <Box
@@ -179,18 +183,18 @@ function ResponsiveAppBar() {
                       sx={{ my: 2, color: "white", ml: "10px" }}
                       variant="contained"
                       size="small"
-                      disabled={gold < 30 || weapon === "sword"}
+                      disabled={gold < 30 || weapon[0].name === "sword"}
                       onClick={() => {
                         currentWeapon++;
                         setGold(gold - 30);
-                        setWeapon([weapons[currentWeapon].name]);
+                        setWeapon([weapons[currentWeapon]]);
                         setText(
                           `You bought a ${weapons[currentWeapon].name} for 30 gold.`
                         );
                         if (gold <= 30) {
                           setText("You do not have enough gold.");
                         }
-                        if (weapon === "sword") {
+                        if (weapon[0].name === "sword") {
                           setText("You already have the most powerful weapon.");
                         }
                       }}
@@ -264,8 +268,38 @@ function ResponsiveAppBar() {
                       size="small"
                       onClick={() => {
                         setText(
-                          `The ${monster.name} attacks. You attack it with your ${weapon}.`
+                          `The ${monster.name} attacks. You attack it with your ${weapon[0].name}.`
                         );
+                        setHealth(health - damageFromTheMonster(monster.level));
+                        if (Math.random() > 0.2 || health < 20) {
+                          monster.health =
+                            monster.health -
+                            (weapon[0].power +
+                              Math.floor(Math.random() * xp) +
+                              1);
+                        } else {
+                          setText(
+                            `The ${monster.name} attacks. You attack it with your ${weapon[0].name}. You miss!`
+                          );
+                        }
+                        if (health <= 0) {
+                          setLocation("lose");
+                          setText("You died. &#x2620; Start a new game.");
+                        } else if (monster.health <= 0) {
+                          if (monster.name === "dragon") {
+                            setLocation("win");
+                            setText(
+                              "Congrats! You defeated the dragon! &#x1F3C6; Start a new game."
+                            );
+                          } else {
+                            setGold(gold + Math.floor(monster.level * 6.7));
+                            setXp(xp + monster.level);
+                            setLocation("defeat_monster");
+                            setText(
+                              'The monster screams "Arg!" as it dies. You gain experience points and find gold.'
+                            );
+                          }
+                        }
                       }}
                     >
                       {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
@@ -299,7 +333,84 @@ function ResponsiveAppBar() {
                   </div>
                 )
             )}
+          {location === "defeat_monster" &&
+            places.map(
+              (place) =>
+                place.name === location && (
+                  <div key={place.name}>
+                    <Button
+                      sx={{ my: 2, color: "white", ml: "5px" }}
+                      variant="contained"
+                      size="small"
+                      onClick={() => {
+                        setLocation("town_square");
+                      }}
+                    >
+                      {place.buttonText[0]}
+                    </Button>
+                    <Button
+                      sx={{ my: 2, color: "white", ml: "10px" }}
+                      variant="contained"
+                      size="small"
+                      onClick={() => {
+                        setLocation("town_square");
+                      }}
+                    >
+                      {place.buttonText[1]}
+                    </Button>
+                    <Button
+                      sx={{ my: 2, color: "white", ml: "10px" }}
+                      variant="contained"
+                      size="small"
+                      onClick={() => {
+                        setLocation("town_square");
+                      }}
+                    >
+                      {place.buttonText[2]}
+                    </Button>
+                  </div>
+                )
+            )}
+          {location === "lose" &&
+            places.map(
+              (place) =>
+                place.name === location && (
+                  <div key={place.name}>
+                    <Button
+                      sx={{ my: 2, color: "white", ml: "5px" }}
+                      variant="contained"
+                      size="small"
+                      onClick={() => {
+                        setLocation("town_square");
+                      }}
+                    >
+                      {place.buttonText[0]}
+                    </Button>
+                    <Button
+                      sx={{ my: 2, color: "white", ml: "10px" }}
+                      variant="contained"
+                      size="small"
+                      onClick={() => {
+                        setLocation("town_square");
+                      }}
+                    >
+                      {place.buttonText[1]}
+                    </Button>
+                    <Button
+                      sx={{ my: 2, color: "white", ml: "10px" }}
+                      variant="contained"
+                      size="small"
+                      onClick={() => {
+                        setLocation("town_square");
+                      }}
+                    >
+                      {place.buttonText[2]}
+                    </Button>
+                  </div>
+                )
+            )}
         </Box>
+
         {location === "fighting" && (
           <Box
             sx={{
@@ -351,6 +462,16 @@ function ResponsiveAppBar() {
             </>
           )}
           {location === "fighting" && (
+            <>
+              <Typography>{text}</Typography>
+            </>
+          )}
+          {location === "defeat_monster" && (
+            <>
+              <Typography>{text}</Typography>
+            </>
+          )}
+          {location === "lose" && (
             <>
               <Typography>{text}</Typography>
             </>
