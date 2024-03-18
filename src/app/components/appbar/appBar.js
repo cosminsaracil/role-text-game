@@ -55,7 +55,7 @@ function ResponsiveAppBar() {
   const monsters = [
     {
       name: "slime",
-      level: 2,
+      level: 16,
       health: 15,
     },
     {
@@ -72,7 +72,7 @@ function ResponsiveAppBar() {
 
   const [weapon, setWeapon] = useState([weapons[currentWeapon]]);
   const [monster, setMonster] = useState();
-  console.log(weapon);
+
   const damageFromTheMonster = (level) => {
     const hit = level * 5 - Math.floor(Math.random() * xp);
     return hit > 0 ? hit : 0;
@@ -282,10 +282,8 @@ function ResponsiveAppBar() {
                             `The ${monster.name} attacks. You attack it with your ${weapon[0].name}. You miss!`
                           );
                         }
-                        if (health <= 0) {
-                          setLocation("lose");
-                          setText("You died. &#x2620; Start a new game.");
-                        } else if (monster.health <= 0) {
+
+                        if (monster.health <= 0) {
                           if (monster.name === "dragon") {
                             setLocation("win");
                             setText(
@@ -302,7 +300,6 @@ function ResponsiveAppBar() {
                         }
                       }}
                     >
-                      {/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
                       {place.buttonText[0]}
                     </Button>
                     <Button
@@ -344,6 +341,9 @@ function ResponsiveAppBar() {
                       size="small"
                       onClick={() => {
                         setLocation("town_square");
+                        setText(
+                          'You are in the town square. You see a sign that says "Store".'
+                        );
                       }}
                     >
                       {place.buttonText[0]}
@@ -354,6 +354,9 @@ function ResponsiveAppBar() {
                       size="small"
                       onClick={() => {
                         setLocation("town_square");
+                        setText(
+                          'You are in the town square. You see a sign that says "Store".'
+                        );
                       }}
                     >
                       {place.buttonText[1]}
@@ -364,6 +367,9 @@ function ResponsiveAppBar() {
                       size="small"
                       onClick={() => {
                         setLocation("town_square");
+                        setText(
+                          'You are in the town square. You see a sign that says "Store".'
+                        );
                       }}
                     >
                       {place.buttonText[2]}
@@ -382,6 +388,9 @@ function ResponsiveAppBar() {
                       size="small"
                       onClick={() => {
                         setLocation("town_square");
+                        setText(
+                          'You are in the town square. You see a sign that says "Store".'
+                        );
                       }}
                     >
                       {place.buttonText[0]}
@@ -392,6 +401,9 @@ function ResponsiveAppBar() {
                       size="small"
                       onClick={() => {
                         setLocation("town_square");
+                        setText(
+                          'You are in the town square. You see a sign that says "Store".'
+                        );
                       }}
                     >
                       {place.buttonText[1]}
@@ -402,6 +414,9 @@ function ResponsiveAppBar() {
                       size="small"
                       onClick={() => {
                         setLocation("town_square");
+                        setText(
+                          'You are in the town square. You see a sign that says "Store".'
+                        );
                       }}
                     >
                       {place.buttonText[2]}
