@@ -162,44 +162,6 @@ function ResponsiveAppBar() {
                       variant="contained"
                       size="small"
                       disabled={gold < 10}
-                      onClick={() => ""}
-                    >
-                      {place.buttonText[0]}
-                    </Button>
-                    <Button
-                      sx={{ my: 2, color: "white", ml: "10px" }}
-                      variant="contained"
-                      size="small"
-                      disabled={gold < 30 || weapon === "sword"}
-                      onClick={() => ""}
-                    >
-                      {place.buttonText[1]}
-                    </Button>
-                    <Button
-                      sx={{ my: 2, color: "white", ml: "10px" }}
-                      variant="contained"
-                      size="small"
-                      onClick={() => {
-                        setLocation("town_square");
-                        setText(
-                          'You are in the town square. You see a sign that says "Store".'
-                        );
-                      }}
-                    >
-                      {place.buttonText[2]}
-                    </Button>
-                  </div>
-                )
-            )}
-          {location === "cave" &&
-            places.map(
-              (place) =>
-                place.name === location && (
-                  <div key={place.name}>
-                    <Button
-                      sx={{ my: 2, color: "white", ml: "5px" }}
-                      variant="contained"
-                      size="small"
                       onClick={() => {
                         setGold(gold - 10);
                         setHealth(health + 10);
@@ -230,6 +192,41 @@ function ResponsiveAppBar() {
                           setText("You already have the most powerful weapon.");
                         }
                       }}
+                    >
+                      {place.buttonText[1]}
+                    </Button>
+                    <Button
+                      sx={{ my: 2, color: "white", ml: "10px" }}
+                      variant="contained"
+                      size="small"
+                      onClick={() => {
+                        setLocation("town_square");
+                        setText(
+                          'You are in the town square. You see a sign that says "Store".'
+                        );
+                      }}
+                    >
+                      {place.buttonText[2]}
+                    </Button>
+                  </div>
+                )
+            )}
+          {location === "cave" &&
+            places.map(
+              (place) =>
+                place.name === location && (
+                  <div key={place.name}>
+                    <Button
+                      sx={{ my: 2, color: "white", ml: "5px" }}
+                      variant="contained"
+                      size="small"
+                    >
+                      {place.buttonText[0]}
+                    </Button>
+                    <Button
+                      sx={{ my: 2, color: "white", ml: "10px" }}
+                      variant="contained"
+                      size="small"
                     >
                       {place.buttonText[1]}
                     </Button>
