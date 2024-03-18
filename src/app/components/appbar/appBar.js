@@ -264,6 +264,11 @@ function ResponsiveAppBar() {
                       sx={{ my: 2, color: "white", ml: "10px" }}
                       variant="contained"
                       size="small"
+                      onClick={() => {
+                        setText(
+                          `You dodged the attack from the ${monster.name}`
+                        );
+                      }}
                     >
                       {place.buttonText[1]}
                     </Button>
@@ -271,6 +276,12 @@ function ResponsiveAppBar() {
                       sx={{ my: 2, color: "white", ml: "10px" }}
                       variant="contained"
                       size="small"
+                      onClick={() => {
+                        setLocation("town_square");
+                        setText(
+                          'You are in the town square. You see a sign that says "Store".'
+                        );
+                      }}
                     >
                       {place.buttonText[2]}
                     </Button>
@@ -282,13 +293,21 @@ function ResponsiveAppBar() {
           <Box
             sx={{
               height: "40px",
-              backgroundColor: "red",
+              backgroundColor: "#A0153E",
               borderLeft: "2px solid black",
               borderRight: "2px solid black",
               borderTop: "2px solid black",
+              display: "flex",
+              alignItems: "center",
+              gap: "20px",
             }}
           >
-            <Typography></Typography>
+            <Typography sx={{ ml: "10px" }}>
+              Monster name: <strong>{monster.name}</strong>
+            </Typography>
+            <Typography>
+              Monster health: <strong>{monster.health}</strong>
+            </Typography>
           </Box>
         )}
 
